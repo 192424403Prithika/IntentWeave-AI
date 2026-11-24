@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: intentweave-ai
+    env: node
+    plan: free
+    region: oregon
+    buildCommand: pnpm install --frozen-lockfile=false && pnpm run build
+    startCommand: pnpm start
+    envVars:
+      - key: NODE_VERSION
+        value: 20.17.0
+      - key: PNPM_VERSION
+        value: 10.24.0
+      - key: NODE_ENV
+        value: production
