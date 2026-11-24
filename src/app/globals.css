@@ -4,61 +4,66 @@
 
 @layer base {
   :root {
-    --background: #f8fafc;
-    --foreground: #0f172a;
+    /* Warm Coffee, Latte & Cream Palette */
+    --background: #FDFBF7;
+    --foreground: #382214;
 
-    --card: #ffffff;
-    --card-foreground: #0f172a;
+    --card: #FFFFFF;
+    --card-foreground: #382214;
 
-    --popover: #ffffff;
-    --popover-foreground: #0f172a;
+    --popover: #FFFFFF;
+    --popover-foreground: #382214;
 
-    --primary: #435eeb;
-    --primary-foreground: #ffffff;
+    /* Primary: Rich Espresso / Warm Mocha */
+    --primary: #5A3825;
+    --primary-foreground: #FFFFFF;
 
-    --secondary: #f1f5f9;
-    --secondary-foreground: #1e293b;
+    /* Secondary: Cream & Steamed Milk Latte */
+    --secondary: #F4EFE6;
+    --secondary-foreground: #4A2E1B;
 
-    --muted: #f1f5f9;
-    --muted-foreground: #64748b;
+    --muted: #EDE5D8;
+    --muted-foreground: #8C7362;
 
-    --accent: #e2e8f0;
-    --accent-foreground: #0f172a;
+    --accent: #E5D7C3;
+    --accent-foreground: #382214;
 
-    --border: #e2e8f0;
-    --input: #e2e8f0;
-    --ring: #435eeb;
+    --border: #E8DED1;
+    --input: #E8DED1;
+    --ring: #7E5232;
 
-    --radius: 0.75rem;
+    --radius: 1.25rem;
 
     --font-inter: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   }
 
   .dark {
-    --background: #090d16;
-    --foreground: #f8fafc;
+    /* Deep Roasted Dark Roast & Warm Caramel */
+    --background: #19120C;
+    --foreground: #F8F4EC;
 
-    --card: #101726;
-    --card-foreground: #f8fafc;
+    --card: #231912;
+    --card-foreground: #F8F4EC;
 
-    --popover: #101726;
-    --popover-foreground: #f8fafc;
+    --popover: #231912;
+    --popover-foreground: #F8F4EC;
 
-    --primary: #4f6bff;
-    --primary-foreground: #ffffff;
+    /* Primary: Warm Roasted Caramel Latte */
+    --primary: #C5A880;
+    --primary-foreground: #1E130B;
 
-    --secondary: #1a2234;
-    --secondary-foreground: #f8fafc;
+    --secondary: #2E2219;
+    --secondary-foreground: #F8F4EC;
 
-    --muted: #1e293b;
-    --muted-foreground: #94a3b8;
+    --muted: #38291F;
+    --muted-foreground: #B5A090;
 
-    --accent: #26354d;
-    --accent-foreground: #f8fafc;
+    --accent: #423024;
+    --accent-foreground: #F8F4EC;
 
-    --border: #1e293b;
-    --input: #1e293b;
-    --ring: #4f6bff;
+    --border: #3A2B20;
+    --input: #3A2B20;
+    --ring: #C5A880;
   }
 }
 
@@ -70,7 +75,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Custom Scrollbar */
+/* Custom Scrollbar in Warm Mocha */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -79,33 +84,39 @@ body {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(148, 163, 184, 0.3);
+  background: rgba(140, 115, 98, 0.25);
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(148, 163, 184, 0.5);
+  background: rgba(140, 115, 98, 0.45);
 }
 
-/* Interlaced weave pattern background */
-.bg-weave-pattern {
-  background-image: radial-gradient(rgba(99, 102, 241, 0.08) 1px, transparent 0);
+/* Subtle Warm Organic Background Texture */
+.bg-coffee-pattern {
+  background-image: radial-gradient(rgba(126, 82, 50, 0.06) 1px, transparent 0);
   background-size: 24px 24px;
 }
-.dark .bg-weave-pattern {
-  background-image: radial-gradient(rgba(99, 102, 241, 0.15) 1px, transparent 0);
+.dark .bg-coffee-pattern {
+  background-image: radial-gradient(rgba(197, 168, 128, 0.08) 1px, transparent 0);
   background-size: 24px 24px;
 }
 
-/* Glassmorphism utility */
-.glass-panel {
-  background: rgba(255, 255, 255, 0.75);
+/* Glassmorphism with Warm Cream Backdrop */
+.coffee-card {
+  background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(226, 232, 240, 0.8);
+  border: 1px solid rgba(232, 222, 209, 0.9);
 }
-.dark .glass-panel {
-  background: rgba(16, 23, 38, 0.75);
+.dark .coffee-card {
+  background: rgba(35, 25, 18, 0.85);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(30, 41, 59, 0.8);
+  border: 1px solid rgba(58, 43, 32, 0.9);
+}
+
+/* Pill UI Utility */
+.pill-button {
+  border-radius: 9999px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }

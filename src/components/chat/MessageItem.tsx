@@ -3,16 +3,15 @@
 import React from 'react';
 import {
   User,
-  Bot,
+  Coffee,
   Mic,
   Image as ImageIcon,
   CheckCircle2,
   AlertTriangle,
-  RotateCcw,
-  Sparkles,
   Volume2,
   Copy,
   Check,
+  Sparkles,
 } from 'lucide-react';
 import { ChatMessage } from '@/types';
 import { ConfirmationCard } from '@/components/confirmation/ConfirmationCard';
@@ -48,42 +47,42 @@ export function MessageItem({ message, onQuickReplySelect }: MessageItemProps) {
 
   return (
     <div
-      className={`group flex gap-3 px-4 py-4 transition-colors ${
-        isUser ? 'bg-transparent' : 'bg-secondary/30 border-y border-border/40'
+      className={`group flex gap-3.5 px-4 sm:px-8 py-5 transition-colors ${
+        isUser ? 'bg-transparent' : 'bg-secondary/40 border-y border-border/70'
       }`}
     >
-      {/* Avatar */}
+      {/* Avatar in Rich Coffee Espresso */}
       <div
-        className={`flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg text-xs font-semibold shadow-sm ${
+        className={`flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-2xl text-xs font-semibold shadow-sm ${
           isUser
-            ? 'bg-primary/20 text-primary border border-primary/30'
-            : 'bg-primary text-primary-foreground shadow-glow-primary'
+            ? 'bg-secondary text-primary border border-border'
+            : 'bg-primary text-primary-foreground shadow-coffee-soft'
         }`}
       >
-        {isUser ? <User className="h-4 w-4" /> : <Bot className="h-4 w-4" />}
+        {isUser ? <User className="h-4 w-4" /> : <Coffee className="h-4 w-4" />}
       </div>
 
       {/* Message Content */}
-      <div className="flex-1 space-y-2 min-w-0">
-        {/* Header / Modality Indicator */}
+      <div className="flex-1 space-y-2.5 min-w-0">
+        {/* Header / Modality Pill */}
         <div className="flex items-center gap-2 text-xs">
-          <span className="font-semibold text-foreground">
+          <span className="font-bold text-foreground">
             {isUser ? 'You' : 'IntentWeave AI'}
           </span>
-          <span className="text-[10px] text-muted-foreground">
+          <span className="text-[10px] text-muted-foreground font-medium">
             {new Date(message.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
           </span>
 
-          {/* Modality Tag */}
+          {/* Modality Tag - Pill Design */}
           <span
-            className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] uppercase font-medium tracking-wide ${
+            className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] uppercase font-bold tracking-wider ${
               message.modality === 'voice'
-                ? 'bg-cyan-500/10 text-cyan-500 border border-cyan-500/20'
+                ? 'bg-amber-100 text-amber-900 dark:bg-amber-900/30 dark:text-amber-200 border border-amber-300 dark:border-amber-700'
                 : message.modality === 'image'
-                ? 'bg-amber-500/10 text-amber-500 border border-amber-500/20'
+                ? 'bg-orange-100 text-orange-900 dark:bg-orange-900/30 dark:text-orange-200 border border-orange-300 dark:border-orange-700'
                 : message.modality === 'mixed'
-                ? 'bg-purple-500/10 text-purple-500 border border-purple-500/20'
-                : 'bg-muted text-muted-foreground'
+                ? 'bg-stone-200 text-stone-900 dark:bg-stone-800 dark:text-stone-200 border border-stone-400'
+                : 'bg-secondary text-muted-foreground border border-border'
             }`}
           >
             {message.modality === 'voice' && <Mic className="h-2.5 w-2.5" />}
@@ -96,12 +95,12 @@ export function MessageItem({ message, onQuickReplySelect }: MessageItemProps) {
         {message.attachments && message.attachments.length > 0 && (
           <div className="flex flex-wrap gap-2 pt-1">
             {message.attachments.map((att, i) => (
-              <div key={i} className="relative rounded-lg overflow-hidden border border-border shadow-sm max-w-xs">
+              <div key={i} className="relative rounded-2xl overflow-hidden border border-border shadow-coffee-soft max-w-xs">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={att.url}
                   alt={att.caption || 'Attached image'}
-                  className="max-h-48 object-cover rounded"
+                  className="max-h-48 object-cover rounded-2xl"
                 />
               </div>
             ))}
@@ -113,20 +112,22 @@ export function MessageItem({ message, onQuickReplySelect }: MessageItemProps) {
           {message.content}
         </div>
 
-        {/* Action Result Card if executed */}
+        {/* Action Result Card if executed - Rounded Pill Style */}
         {message.actionRecord && message.actionRecord.status === 'done' && (
-          <div className="mt-2 flex items-center justify-between p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-xs text-foreground">
-            <div className="flex items-center gap-2">
-              <CheckCircle2 className="h-4 w-4 text-emerald-500 flex-shrink-0" />
+          <div className="mt-2.5 flex items-center justify-between p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-xs text-foreground shadow-sm">
+            <div className="flex items-center gap-2.5">
+              <div className="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-500 text-white">
+                <Check className="h-3.5 w-3.5" />
+              </div>
               <div>
-                <span className="font-semibold text-emerald-600 dark:text-emerald-400">
+                <span className="font-bold text-emerald-800 dark:text-emerald-300">
                   {message.actionRecord.actionName}
                 </span>{' '}
                 executed successfully in {message.actionRecord.latencyMs || 85}ms.
               </div>
             </div>
-            <span className="text-[10px] text-muted-foreground capitalize">
-              Approved by: {message.actionRecord.approvedBy}
+            <span className="text-[10px] px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 font-semibold capitalize">
+              Verified by: {message.actionRecord.approvedBy}
             </span>
           </div>
         )}
@@ -138,16 +139,16 @@ export function MessageItem({ message, onQuickReplySelect }: MessageItemProps) {
           </div>
         )}
 
-        {/* Quick Reply Chips */}
+        {/* Quick Reply Chips - Pill Buttons */}
         {message.quickReplies && message.quickReplies.length > 0 && !isAwaitingThisConfirmation && (
           <div className="flex flex-wrap gap-1.5 pt-2">
             {message.quickReplies.map((reply, idx) => (
               <button
                 key={idx}
                 onClick={() => onQuickReplySelect?.(reply)}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-secondary text-secondary-foreground hover:bg-primary hover:text-primary-foreground border border-border hover:border-primary transition-all shadow-sm"
+                className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-card text-foreground hover:bg-primary hover:text-primary-foreground border border-border shadow-sm transition-all"
               >
-                <Sparkles className="h-3 w-3" />
+                <Sparkles className="h-3 w-3 text-primary group-hover:text-primary-foreground" />
                 {reply}
               </button>
             ))}
@@ -160,14 +161,14 @@ export function MessageItem({ message, onQuickReplySelect }: MessageItemProps) {
             <button
               onClick={handleCopy}
               title="Copy message"
-              className="p-1 text-muted-foreground hover:text-foreground rounded"
+              className="p-1 text-muted-foreground hover:text-foreground rounded-full"
             >
               {copied ? <Check className="h-3 w-3 text-emerald-500" /> : <Copy className="h-3 w-3" />}
             </button>
             <button
               onClick={handleSpeak}
               title="Read aloud"
-              className="p-1 text-muted-foreground hover:text-foreground rounded"
+              className="p-1 text-muted-foreground hover:text-foreground rounded-full"
             >
               <Volume2 className="h-3 w-3" />
             </button>

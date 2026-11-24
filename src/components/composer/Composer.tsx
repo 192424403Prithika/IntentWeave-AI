@@ -25,7 +25,6 @@ export function Composer() {
   const videoRef = React.useRef<HTMLVideoElement>(null);
   const recognitionRef = React.useRef<any>(null);
 
-  // Initialize Web Speech API if supported
   React.useEffect(() => {
     if (typeof window !== 'undefined') {
       const SpeechRecognition =
@@ -60,7 +59,6 @@ export function Composer() {
 
   const toggleRecording = () => {
     if (isRecording) {
-      // Stop recording
       recognitionRef.current?.stop();
       setIsRecording(false);
       if (interimTranscript) {
@@ -68,13 +66,11 @@ export function Composer() {
         setInterimTranscript('');
       }
     } else {
-      // Start recording
       setInterimTranscript('');
       try {
         recognitionRef.current?.start();
         setIsRecording(true);
       } catch {
-        // Fallback simulated speech input for browsers without Web Speech
         setIsRecording(true);
         setTimeout(() => {
           const sampleAudioPrompt = 'Add milk and eggs to my shopping list';
@@ -103,7 +99,6 @@ export function Composer() {
     }
   };
 
-  // Paste image handler
   const handlePaste = (e: React.ClipboardEvent) => {
     const items = e.clipboardData.items;
     for (let i = 0; i < items.length; i++) {
@@ -114,7 +109,6 @@ export function Composer() {
     }
   };
 
-  // Webcam capture
   const startWebcam = async () => {
     setShowWebcam(true);
     try {
@@ -137,7 +131,6 @@ export function Composer() {
       ctx.drawImage(videoRef.current, 0, 0);
       setSelectedImage(canvas.toDataURL('image/png'));
     }
-    // Stop tracks
     const stream = videoRef.current.srcObject as MediaStream;
     stream?.getTracks().forEach((track) => track.stop());
     setShowWebcam(false);
@@ -176,13 +169,13 @@ export function Composer() {
   const isBusy = currentStage !== 'idle' && currentStage !== 'executed' && currentStage !== 'error';
 
   return (
-    <div className="border-t border-border bg-card/60 backdrop-blur-md p-3 sm:p-4">
-      <div className="mx-auto max-w-4xl space-y-2">
+    <div className="border-t border-border bg-background/95 backdrop-blur-md p-4 sm:p-5">
+      <div className="mx-auto max-w-4xl space-y-2.5">
         {/* Image Preview if selected */}
         {selectedImage && (
-          <div className="relative inline-block rounded-lg overflow-hidden border border-border shadow-sm">
+          <div className="relative inline-block rounded-2xl overflow-hidden border border-border shadow-coffee-soft">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={selectedImage} alt="Attachment" className="h-20 w-auto object-cover rounded" />
+            <img src={selectedImage} alt="Attachment" className="h-20 w-auto object-cover rounded-2xl" />
             <button
               onClick={() => setSelectedImage(null)}
               className="absolute top-1 right-1 p-1 rounded-full bg-black/60 text-white hover:bg-black"
@@ -192,17 +185,16 @@ export function Composer() {
           </div>
         )}
 
-        {/* Live Interim Transcript Bubble */}
+        {/* Live Interim Transcript Bubble in Warm Caramel */}
         {isRecording && (
-          <div className="flex items-center gap-2 p-2 rounded-lg bg-cyan-500/10 border border-cyan-500/30 text-xs text-cyan-600 dark:text-cyan-400 animate-pulse">
+          <div className="flex items-center gap-2 p-2.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-xs text-amber-800 dark:text-amber-200 animate-pulse font-medium">
             <Mic className="h-4 w-4 animate-bounce" />
-            <span>Listening... {interimTranscript || 'Speak now (say: "Add milk and eggs to my shopping list")'}</span>
+            <span>Listening... {interimTranscript || 'Speak naturally (say: "Add milk and eggs to my shopping list")'}</span>
           </div>
         )}
 
-        {/* Composer Input Box */}
-        <div className="relative flex items-end gap-2 rounded-xl bg-secondary/80 border border-border p-2 focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition-all">
-          {/* Hidden File Input */}
+        {/* Composer Input Box - Wireframe Pill Design */}
+        <div className="relative flex items-end gap-2 rounded-3xl bg-secondary border border-border p-2 focus-within:border-primary focus-within:ring-1 focus-within:ring-primary shadow-sm transition-all">
           <input
             type="file"
             ref={fileInputRef}
@@ -216,14 +208,14 @@ export function Composer() {
             <button
               onClick={() => fileInputRef.current?.click()}
               title="Attach Image (or paste from clipboard)"
-              className="p-1.5 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+              className="p-2 rounded-full text-muted-foreground hover:text-foreground hover:bg-card transition-colors"
             >
               <ImageIcon className="h-4 w-4" />
             </button>
             <button
               onClick={startWebcam}
               title="Capture photo from camera"
-              className="p-1.5 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+              className="p-2 rounded-full text-muted-foreground hover:text-foreground hover:bg-card transition-colors"
             >
               <Camera className="h-4 w-4" />
             </button>
@@ -237,58 +229,58 @@ export function Composer() {
             onPaste={handlePaste}
             placeholder="Say it, type it, or show it... (e.g. 'Remind me tomorrow at 9 am', or drag an image)"
             rows={1}
-            className="flex-1 max-h-32 resize-none bg-transparent py-1.5 px-2 text-xs sm:text-sm text-foreground placeholder:text-muted-foreground focus:outline-none"
+            className="flex-1 max-h-32 resize-none bg-transparent py-2 px-2 text-xs sm:text-sm text-foreground placeholder:text-muted-foreground focus:outline-none"
           />
 
           {/* Voice Mic Button */}
           <button
             onClick={toggleRecording}
             title={isRecording ? 'Stop Recording' : 'Voice Input (Click to speak)'}
-            className={`p-2 rounded-lg transition-all ${
+            className={`p-2.5 rounded-full transition-all ${
               isRecording
-                ? 'bg-cyan-500 text-white shadow-glow-voice animate-pulse'
-                : 'text-muted-foreground hover:text-cyan-500 hover:bg-muted'
+                ? 'bg-amber-600 text-white shadow-coffee-soft animate-pulse'
+                : 'text-muted-foreground hover:text-primary hover:bg-card'
             }`}
           >
             {isRecording ? <MicOff className="h-4 w-4" /> : <Mic className="h-4 w-4" />}
           </button>
 
-          {/* Send Button */}
+          {/* Send Button - Rounded Pill */}
           <button
             onClick={handleSend}
             disabled={(!text.trim() && !selectedImage && !interimTranscript) || isBusy}
             title="Send (Enter)"
-            className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground disabled:opacity-40 hover:opacity-90 shadow-glow-primary transition-all"
+            className="flex h-9 w-9 items-center justify-center rounded-full bg-primary text-primary-foreground disabled:opacity-40 hover:opacity-95 shadow-coffee-soft transition-all"
           >
             <Send className="h-4 w-4" />
           </button>
         </div>
 
-        {/* Quick prompt suggestions chips */}
-        <div className="flex items-center justify-between text-[11px] text-muted-foreground px-1">
-          <div className="flex items-center gap-2 overflow-x-auto py-1">
-            <span className="font-medium text-foreground/70 hidden sm:inline">Try:</span>
+        {/* Quick prompt suggestions chips - Pill Buttons matching wireframe screen 4 & 5 */}
+        <div className="flex items-center justify-between text-[11px] text-muted-foreground px-1 pt-1">
+          <div className="flex items-center gap-1.5 overflow-x-auto py-1">
+            <span className="font-semibold text-foreground/70 hidden sm:inline">Try:</span>
             <button
               onClick={() => setText('Remind me to submit the report tomorrow at 9 am')}
-              className="px-2 py-0.5 rounded-full bg-muted hover:bg-primary/10 hover:text-primary transition-colors whitespace-nowrap"
+              className="px-3 py-1 rounded-full bg-secondary hover:bg-primary hover:text-primary-foreground transition-all whitespace-nowrap text-xs font-medium border border-border"
             >
               Remind tomorrow at 9 am
             </button>
             <button
               onClick={() => setText('Add milk and eggs to my shopping list')}
-              className="px-2 py-0.5 rounded-full bg-muted hover:bg-primary/10 hover:text-primary transition-colors whitespace-nowrap"
+              className="px-3 py-1 rounded-full bg-secondary hover:bg-primary hover:text-primary-foreground transition-all whitespace-nowrap text-xs font-medium border border-border"
             >
               Add milk & eggs
             </button>
             <button
               onClick={() => setText('Change it to 10 am')}
-              className="px-2 py-0.5 rounded-full bg-muted hover:bg-primary/10 hover:text-primary transition-colors whitespace-nowrap"
+              className="px-3 py-1 rounded-full bg-secondary hover:bg-primary hover:text-primary-foreground transition-all whitespace-nowrap text-xs font-medium border border-border"
             >
               Change it to 10 am
             </button>
             <button
               onClick={() => setText('Delete that')}
-              className="px-2 py-0.5 rounded-full bg-muted hover:bg-primary/10 hover:text-primary transition-colors whitespace-nowrap"
+              className="px-3 py-1 rounded-full bg-secondary hover:bg-primary hover:text-primary-foreground transition-all whitespace-nowrap text-xs font-medium border border-border"
             >
               Delete that
             </button>
@@ -302,24 +294,24 @@ export function Composer() {
 
       {/* Webcam Modal */}
       {showWebcam && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4">
-          <div className="w-full max-w-md rounded-2xl bg-card p-4 border border-border shadow-elevated space-y-3">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-sm p-4">
+          <div className="w-full max-w-md rounded-3xl bg-card p-5 border border-border shadow-coffee-elevated space-y-4">
             <div className="flex items-center justify-between">
-              <h3 className="text-sm font-bold text-foreground">Live Camera Capture</h3>
-              <button onClick={closeWebcam} className="p-1 rounded text-muted-foreground hover:text-foreground">
+              <h3 className="text-sm font-bold text-foreground">Live Camera Snapshot</h3>
+              <button onClick={closeWebcam} className="p-1 rounded-full text-muted-foreground hover:text-foreground">
                 <X className="h-4 w-4" />
               </button>
             </div>
-            <div className="rounded-xl overflow-hidden bg-black aspect-video flex items-center justify-center">
+            <div className="rounded-2xl overflow-hidden bg-black aspect-video flex items-center justify-center">
               <video ref={videoRef} autoPlay playsInline className="w-full h-full object-cover" />
             </div>
             <div className="flex justify-end gap-2">
-              <button onClick={closeWebcam} className="px-3 py-1.5 rounded-lg text-xs font-medium text-muted-foreground">
+              <button onClick={closeWebcam} className="px-4 py-2 rounded-full text-xs font-semibold text-muted-foreground hover:bg-secondary">
                 Cancel
               </button>
               <button
                 onClick={captureWebcamSnapshot}
-                className="px-4 py-1.5 rounded-lg text-xs font-semibold bg-primary text-primary-foreground hover:opacity-90"
+                className="px-5 py-2 rounded-full text-xs font-bold bg-primary text-primary-foreground hover:opacity-90 shadow-coffee-soft"
               >
                 Capture Photo
               </button>
